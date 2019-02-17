@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountData.cs" />
+    <Compile Include="ContactData.cs" />
+    <Compile Include="ContactTests.cs" />
     <Compile Include="GroupCreationTests.cs" />
     <Compile Include="GroupData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
