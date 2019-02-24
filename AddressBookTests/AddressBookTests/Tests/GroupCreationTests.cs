@@ -11,16 +11,16 @@ namespace AddressBookTests
         [Test]
         public void GroupCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToGroupsPage();
-            InitNewGroupCreation();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Navigator.GoToGroupsPage();
+            app.GroupsHelper.InitNewGroupCreation();
             GroupData group = new GroupData("aaa");
             group.Header = "bbbn";
             group.Footer = "ccc";
-            FillGroupForm(group);
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
+            app.GroupsHelper.FillGroupForm(group);
+            app.GroupsHelper.SubmitGroupCreation();
+            app.GroupsHelper.ReturnToGroupsPage();
         }
     }
 }
