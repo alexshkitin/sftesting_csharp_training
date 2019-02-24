@@ -21,10 +21,18 @@ namespace AddressBookTests
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook/";
 
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigationHelper(driver, baseURL);
-            groupsHelper = new GroupsHelper(driver);
-            contsctsHelper = new ContactsHelper(driver);
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigationHelper(this, baseURL);
+            groupsHelper = new GroupsHelper(this);
+            contsctsHelper = new ContactsHelper(this);
+        }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
         }
 
         public void Stop()
@@ -71,5 +79,7 @@ namespace AddressBookTests
                 return this.contsctsHelper;
             }
         }
+
+
     }
 }

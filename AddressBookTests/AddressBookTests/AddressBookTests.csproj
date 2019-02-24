@@ -62,11 +62,14 @@
     <Compile Include="AppManager\ApplicationManager.cs" />
     <Compile Include="Model\ContactData.cs" />
     <Compile Include="AppManager\ContactsHelper.cs" />
-    <Compile Include="Tests\ContactTests.cs" />
+    <Compile Include="Tests\ContactCreationTests.cs" />
+    <Compile Include="Tests\ContactModificationTests.cs" />
+    <Compile Include="Tests\ContactRemovalTests.cs" />
     <Compile Include="Tests\GroupCreationTests.cs" />
     <Compile Include="Model\GroupData.cs" />
     <Compile Include="AppManager\GroupsHelper.cs" />
-    <Compile Include="Tests\GroupRemovalTest.cs" />
+    <Compile Include="Tests\GroupModificationTests.cs" />
+    <Compile Include="Tests\GroupRemovalTests.cs" />
     <Compile Include="AppManager\HelperBase.cs" />
     <Compile Include="AppManager\LoginHelper.cs" />
     <Compile Include="AppManager\NavigationHelper.cs" />
