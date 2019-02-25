@@ -22,17 +22,18 @@ namespace AddressBookTests
             return this;
         }
 
-        public ContactsHelper Modify(ContactData contactData)
+        public ContactsHelper Modify(int rowId, ContactData contactData)
         {
-            InitModification();
+            Select(rowId);
+            InitModification(rowId);
             FillContactForm(contactData);
             SubmitModification();
             return this;
         }
 
-        public ContactsHelper Remove(int contactId)
+        public ContactsHelper Remove(int rowId)
         {
-            Select(contactId);
+            Select(rowId);
             DeleteContact();
             return this;
         }
@@ -44,9 +45,10 @@ namespace AddressBookTests
             return this;
         }
 
-        public ContactsHelper Select(int contactId)
+        public ContactsHelper Select(int rowId)
         {
-            driver.FindElement(By.Id(contactId.ToString())).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
+                +rowId+"]/td/input")).Click();
             return this;
         }
 
@@ -56,9 +58,10 @@ namespace AddressBookTests
             return this;
         }
 
-        public ContactsHelper InitModification()
+        public ContactsHelper InitModification(int rowId)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
+                +rowId+"]/td[8]/a/img")).Click();
             return this;
         }
 

@@ -12,7 +12,7 @@ namespace AddressBookTests
             newContactData.LastName = "new laast naame";
 
             app.ContactsHelper
-                .Modify(newContactData);
+                .Modify(2, newContactData);
 
         }
 
