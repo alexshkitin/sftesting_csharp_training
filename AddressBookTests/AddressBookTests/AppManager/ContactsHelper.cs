@@ -19,6 +19,7 @@ namespace AddressBookTests
         public ContactsHelper Modify(int rowId, ContactData contactData)
         {
             manager.Navigator.GoToHomePage();
+
             int actualRowId = rowId + 1;
             Select(actualRowId);
             InitModification(actualRowId);
@@ -46,8 +47,16 @@ namespace AddressBookTests
 
         public ContactsHelper Select(int rowId)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
-                +rowId+"]/td/input")).Click();
+            try
+            {
+                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
+                    + rowId + "]/td/input")).Click();
+            }
+            catch(NoSuchElementException)
+            {
+                Create(new ContactData("test contact"));
+                manager.Navigator.GoToHomePage();
+            }
             return this;
         }
 
