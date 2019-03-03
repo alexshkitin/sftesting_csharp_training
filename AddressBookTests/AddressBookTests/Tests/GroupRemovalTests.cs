@@ -3,13 +3,12 @@
 namespace AddressBookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : TestBase
+    public class GroupRemovalTests : AuthTestBase
     {
         [Test]
         public void GroupRemovalTest()
         {
             app.GroupsHelper.Remove(1);
         }
-
     }
 }

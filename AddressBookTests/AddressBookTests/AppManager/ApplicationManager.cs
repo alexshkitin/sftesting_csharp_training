@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-
+using System.Threading;
 
 namespace AddressBookTests
 {
@@ -15,8 +14,9 @@ namespace AddressBookTests
         protected NavigationHelper navigator;
         protected GroupsHelper groupsHelper;
         protected ContactsHelper contsctsHelper;
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
-        public ApplicationManager()
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook/";
@@ -27,15 +27,7 @@ namespace AddressBookTests
             contsctsHelper = new ContactsHelper(this);
         }
 
-        public IWebDriver Driver
-        {
-            get
-            {
-                return driver;
-            }
-        }
-
-        public void Stop()
+         ~ApplicationManager()
         {
             try
             {
@@ -45,7 +37,14 @@ namespace AddressBookTests
             {
                 // Ignore errors if unable to close the browser
             }
+        }
 
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
         }
 
         public LoginHelper Auth
@@ -80,6 +79,15 @@ namespace AddressBookTests
             }
         }
 
-
+        public static ApplicationManager GetInstance()
+        {
+            if (!app.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.GoToHomePage();
+                app.Value = newInstance;
+            }
+            return app.Value;
+        }
     }
 }

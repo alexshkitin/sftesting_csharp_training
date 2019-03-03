@@ -3,7 +3,7 @@
 namespace AddressBookTests
 {
     [TestFixture]
-    class ContactModificationTests : TestBase
+    class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
@@ -12,9 +12,8 @@ namespace AddressBookTests
             newContactData.LastName = "new laast naame";
 
             app.ContactsHelper
-                .Modify(2, newContactData);
+                .Modify(1, newContactData);
 
         }
-
     }
 }

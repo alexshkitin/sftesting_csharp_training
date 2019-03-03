@@ -12,6 +12,7 @@ namespace AddressBookTests
         public GroupsHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
+
             InitNewGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
@@ -22,6 +23,7 @@ namespace AddressBookTests
         public GroupsHelper Modify(int groupId, GroupData groupData)
         {
             manager.Navigator.GoToGroupsPage();
+
             SelectGroup(groupId);
             InitGroupModification();
             FillGroupForm(groupData);
@@ -45,6 +47,7 @@ namespace AddressBookTests
         public GroupsHelper Remove(int groupId)
         {
             manager.Navigator.GoToGroupsPage();
+
             SelectGroup(groupId);
             RemoveSelectedGroup();
             ReturnToGroupsPage();
@@ -71,13 +74,9 @@ namespace AddressBookTests
 
         public GroupsHelper FillGroupForm(GroupData group)
         {
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            Type(By.Name("group_name"), group.Name);
+            Type(By.Name("group_header"), group.Header);
+            Type(By.Name("group_footer"), group.Footer);
             return this;
         }
 

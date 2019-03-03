@@ -1,11 +1,4 @@
-﻿using System;
-using System.Text;
-using NUnit.Framework;
-using NUnit;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
-
+﻿using OpenQA.Selenium;
 
 namespace AddressBookTests
 {
@@ -16,6 +9,7 @@ namespace AddressBookTests
 
         public ContactsHelper Create(ContactData contact)
         {
+            manager.Navigator.GoToHomePage();
             InitAddNewContact();
             FillContactForm(contact);
             SubmitContact();
@@ -24,8 +18,10 @@ namespace AddressBookTests
 
         public ContactsHelper Modify(int rowId, ContactData contactData)
         {
-            Select(rowId);
-            InitModification(rowId);
+            manager.Navigator.GoToHomePage();
+            int actualRowId = rowId + 1;
+            Select(actualRowId);
+            InitModification(actualRowId);
             FillContactForm(contactData);
             SubmitModification();
             return this;
@@ -33,7 +29,10 @@ namespace AddressBookTests
 
         public ContactsHelper Remove(int rowId)
         {
-            Select(rowId);
+            manager.Navigator.GoToHomePage();
+            int actualRowId = rowId + 1;
+
+            Select(actualRowId);
             DeleteContact();
             return this;
         }
@@ -73,11 +72,8 @@ namespace AddressBookTests
 
         public ContactsHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.FistName);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            Type(By.Name("firstname"), contact.FistName);
+            Type(By.Name("lastname"), contact.LastName);
             return this;
         }
 

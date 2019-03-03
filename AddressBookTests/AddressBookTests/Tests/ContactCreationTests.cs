@@ -3,7 +3,7 @@
 namespace AddressBookTests
 {
     [TestFixture]
-    public class ContactCreationTests : TestBase
+    public class ContactCreationTests : AuthTestBase
     {
         [Test]
         public void ContactCreationTest()
@@ -18,11 +18,9 @@ namespace AddressBookTests
         public void EmptyContactCreationTest()
         {
             ContactData contact = new ContactData("");
-            contact.LastName = "";
+            contact.LastName = null;
 
             app.ContactsHelper.Create(contact);
         }
-
-
     }
 }

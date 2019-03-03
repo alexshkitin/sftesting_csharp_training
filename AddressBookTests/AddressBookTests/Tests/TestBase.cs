@@ -6,22 +6,12 @@ namespace AddressBookTests
     {
 
         protected string baseURL;
-
         protected ApplicationManager app;
 
         [SetUp]
-        public void SetupTest()
+        public void SetupAppManager()
         {
-            app = new ApplicationManager();
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
+            app = ApplicationManager.GetInstance();
         }
-
-        [TearDown]
-        public void TeardownTest()
-        {
-            app.Stop();
-        }
-
     }
 }

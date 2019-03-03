@@ -3,7 +3,7 @@
 namespace AddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
+    public class GroupCreationTests : AuthTestBase
     {
         [Test]
         public void GroupCreationTest()
@@ -19,8 +19,8 @@ namespace AddressBookTests
         public void EmptyGroupCreationTest()
         {
             GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
+            group.Header = null;
+            group.Footer = null;
 
             app.GroupsHelper.Create(group);
         }

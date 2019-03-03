@@ -52,5 +52,6 @@ namespace AddressBookTests
                 footer = value;
             }
         }
+
     }
 }
