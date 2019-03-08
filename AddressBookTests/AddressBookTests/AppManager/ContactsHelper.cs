@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Collections.Generic;
+using OpenQA.Selenium;
 
 namespace AddressBookTests
 {
@@ -20,7 +22,7 @@ namespace AddressBookTests
         {
             manager.Navigator.GoToHomePage();
 
-            int actualRowId = rowId + 1;
+            int actualRowId = rowId + 2;
             Select(actualRowId);
             InitModification(actualRowId);
             FillContactForm(contactData);
@@ -31,10 +33,11 @@ namespace AddressBookTests
         public ContactsHelper Remove(int rowId)
         {
             manager.Navigator.GoToHomePage();
-            int actualRowId = rowId + 1;
 
+            int actualRowId = rowId + 2;
             Select(actualRowId);
             DeleteContact();
+            manager.Navigator.GoToHomePage();
             return this;
         }
 
@@ -79,7 +82,7 @@ namespace AddressBookTests
 
         public ContactsHelper FillContactForm(ContactData contact)
         {
-            Type(By.Name("firstname"), contact.FistName);
+            Type(By.Name("firstname"), contact.FirstName);
             Type(By.Name("lastname"), contact.LastName);
             return this;
         }
@@ -89,6 +92,34 @@ namespace AddressBookTests
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
+
+        public ContactsHelper CreateContactIfNotExisted()
+        {
+            if (!IsAnyContactCreated())
+            {
+                ContactData contact = new ContactData("FirstName");
+                Create(contact);
+            }
+            return this;
+        }
+
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+
+            foreach (IWebElement element in elements)
+            {
+                ContactData contact = new ContactData(element.FindElements(By.TagName("td"))[2].Text);
+                contact.LastName = element.FindElements(By.TagName("td"))[1].Text;
+                contacts.Add(contact);
+            }
+
+            return contacts;
+        }
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OpenQA.Selenium;
 
 
@@ -18,6 +19,20 @@ namespace AddressBookTests
             SubmitGroupCreation();
             ReturnToGroupsPage();
             return this;
+        }
+
+        public List<GroupData> GetGroupsList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
         }
 
         public GroupsHelper Modify(int groupId, GroupData groupData)
@@ -88,13 +103,23 @@ namespace AddressBookTests
 
         public GroupsHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
         public bool IsAnyGroupCreated()
         {
             return IsElementPresent(By.XPath("(//input[@name='selected[]'])[2]"));
+        }
+
+        public GroupsHelper CreateGroupIfNotExsisted()
+        {
+            if (!IsAnyGroupCreated())
+            {
+                GroupData group = new GroupData("TestName");
+                Create(group);
+            }
+            return this;
         }
     }
 }

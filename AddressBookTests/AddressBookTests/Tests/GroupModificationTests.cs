@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-
+using System.Collections.Generic;
 
 namespace AddressBookTests
 {
@@ -9,19 +9,22 @@ namespace AddressBookTests
         [Test]
         public void GroupModificationTest()
         {
+            app.GroupsHelper.CreateGroupIfNotExsisted();
 
-            if (!app.GroupsHelper.IsAnyGroupCreated())
-            {
-                GroupData group = new GroupData("TestName");
-                app.GroupsHelper.Create(group);
-            }
+            List<GroupData> oldGroups = app.GroupsHelper.GetGroupsList();
 
             GroupData newGroupData= new GroupData("New name");
             newGroupData.Header = null;
             newGroupData.Footer = null;
 
             app.GroupsHelper
-                .Modify(1, newGroupData);
+                .Modify(0, newGroupData);
+
+            List<GroupData> newGroups = app.GroupsHelper.GetGroupsList();
+            oldGroups[0].Name = newGroupData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

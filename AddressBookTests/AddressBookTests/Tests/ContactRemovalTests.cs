@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
+
 
 namespace AddressBookTests
 {
@@ -8,13 +10,16 @@ namespace AddressBookTests
         [Test]
         public void ContactRemovalTest()
         {
-            if (!app.ContactsHelper.IsAnyContactCreated())
-            {
-                ContactData contact = new ContactData("FirstName");
-                app.ContactsHelper.Create(contact);
-            }
+            app.ContactsHelper.CreateContactIfNotExisted();
+            List<ContactData> oldContacts = app.ContactsHelper.GetContactList();
 
-            app.ContactsHelper.Remove(1);
+            app.ContactsHelper.Remove(0);
+
+            oldContacts.RemoveAt(0);
+            List<ContactData> newContacts = app.ContactsHelper.GetContactList();
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
