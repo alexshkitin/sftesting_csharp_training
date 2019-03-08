@@ -88,16 +88,13 @@ namespace AddressBookTests
 
         public GroupsHelper SelectGroup(int index)
         {
-            try
-            {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-            }
-            catch(NoSuchElementException)
-            {
-                Create(new GroupData("test group"));
-                manager.Navigator.GoToGroupsPage();
-            }
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
+        }
+
+        public bool IsAnyGroupCreated()
+        {
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])[2]"));
         }
     }
 }

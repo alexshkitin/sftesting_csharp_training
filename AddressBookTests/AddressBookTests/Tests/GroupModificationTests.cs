@@ -9,6 +9,13 @@ namespace AddressBookTests
         [Test]
         public void GroupModificationTest()
         {
+
+            if (!app.GroupsHelper.IsAnyGroupCreated())
+            {
+                GroupData group = new GroupData("TestName");
+                app.GroupsHelper.Create(group);
+            }
+
             GroupData newGroupData= new GroupData("New name");
             newGroupData.Header = null;
             newGroupData.Footer = null;

@@ -47,17 +47,15 @@ namespace AddressBookTests
 
         public ContactsHelper Select(int rowId)
         {
-            try
-            {
-                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
-                    + rowId + "]/td/input")).Click();
-            }
-            catch(NoSuchElementException)
-            {
-                Create(new ContactData("test contact"));
-                manager.Navigator.GoToHomePage();
-            }
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
+                + rowId + "]/td/input")).Click();
             return this;
+        }
+
+        public bool IsAnyContactCreated()
+        {
+            return IsElementPresent(By.XPath("//table[@id='maintable']" +
+                "/tbody/tr[2]/td/input"));
         }
 
         public ContactsHelper SubmitModification()

@@ -15,7 +15,6 @@ namespace AddressBookTests
 
             //action
             app.Auth.Logout();
-            //Thread.Sleep(500);
             app.Auth.Login(account);
 
             //verification
@@ -30,7 +29,6 @@ namespace AddressBookTests
 
             //action
             app.Auth.Logout();
-            //Thread.Sleep(500);
             app.Auth.Login(account);
 
             //verification
