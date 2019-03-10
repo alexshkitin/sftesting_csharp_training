@@ -10,8 +10,10 @@ namespace AddressBookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData("test naame");
-            contact.LastName = "test laast naame";
+            ContactData contact = new ContactData("test naame")
+            {
+                LastName = "test laast naame"
+            };
 
             List<ContactData> oldContacts = app.ContactsHelper.GetContactList();
 

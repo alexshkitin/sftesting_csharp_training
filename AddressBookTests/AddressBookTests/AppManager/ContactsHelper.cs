@@ -9,6 +9,8 @@ namespace AddressBookTests
         public ContactsHelper(ApplicationManager manager):base(manager)
         { }
 
+        private List<ContactData> contactCache = null;
+
         public ContactsHelper Create(ContactData contact)
         {
             manager.Navigator.GoToHomePage();
@@ -45,6 +47,7 @@ namespace AddressBookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
@@ -64,6 +67,7 @@ namespace AddressBookTests
         public ContactsHelper SubmitModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -77,6 +81,7 @@ namespace AddressBookTests
         public ContactsHelper SubmitContact()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -106,20 +111,22 @@ namespace AddressBookTests
 
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-
-            foreach (IWebElement element in elements)
+            if (contactCache==null)
             {
-                ContactData contact = new ContactData(element.FindElements(By.TagName("td"))[2].Text);
-                contact.LastName = element.FindElements(By.TagName("td"))[1].Text;
-                contacts.Add(contact);
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+
+                foreach (IWebElement element in elements)
+                {
+                    ContactData contact = new ContactData(element.FindElements(By.TagName("td"))[2].Text)
+                    {
+                        LastName = element.FindElements(By.TagName("td"))[1].Text
+                    };
+                    contactCache.Add(contact);
+                }
             }
-
-            return contacts;
+            return new List<ContactData>(contactCache); ;
         }
-
-
     }
 }

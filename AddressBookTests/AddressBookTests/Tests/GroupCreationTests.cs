@@ -14,11 +14,11 @@ namespace AddressBookTests
             group.Header = "bbbn";
             group.Footer = "ccc";
 
-            List<GroupData> oldGroups = app.GroupsHelper.GetGroupsList();
+            List<GroupData> oldGroups = app.GroupsHelper.GetGroupList();
 
             app.GroupsHelper.Create(group);
             oldGroups.Add(group);
-            List<GroupData> newGroups = app.GroupsHelper.GetGroupsList();
+            List<GroupData> newGroups = app.GroupsHelper.GetGroupList();
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
@@ -31,12 +31,12 @@ namespace AddressBookTests
             group.Header = null;
             group.Footer = null;
 
-            List<GroupData> oldGroups = app.GroupsHelper.GetGroupsList();
+            List<GroupData> oldGroups = app.GroupsHelper.GetGroupList();
 
             app.GroupsHelper.Create(group);
 
             oldGroups.Add(group);
-            List<GroupData> newGroups = app.GroupsHelper.GetGroupsList();
+            List<GroupData> newGroups = app.GroupsHelper.GetGroupList();
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
@@ -49,12 +49,12 @@ namespace AddressBookTests
             group.Header = null;
             group.Footer = null;
 
-            List<GroupData> oldGroups = app.GroupsHelper.GetGroupsList();
+            List<GroupData> oldGroups = app.GroupsHelper.GetGroupList();
 
             app.GroupsHelper.Create(group);
 
             oldGroups.Add(group);
-            List<GroupData> newGroups = app.GroupsHelper.GetGroupsList();
+            List<GroupData> newGroups = app.GroupsHelper.GetGroupList();
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);

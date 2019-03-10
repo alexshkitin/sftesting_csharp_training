@@ -4,12 +4,13 @@ namespace AddressBookTests
 {
     public class ContactData  : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstName;
-        private string lastName;
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
 
         public ContactData(string firstName)
         {
-            this.firstName = firstName;
+            FirstName = firstName;
         }
 
         public bool Equals(ContactData other)
@@ -23,9 +24,7 @@ namespace AddressBookTests
             {
                 return true;
             }
-
             return (FirstName.CompareTo(other.FirstName) == 0 && LastName.CompareTo(other.LastName)==0);
-
         }
 
         public override int GetHashCode()
@@ -47,30 +46,6 @@ namespace AddressBookTests
             }
 
             return (FirstName + LastName).CompareTo(other.FirstName + other.LastName);
-        }
-
-        public string FirstName
-        {
-            get
-            {
-                return this.firstName;
-            }
-            set
-            {
-                firstName = value;
-            }
-        }
-
-        public string LastName
-        {
-            get
-            {
-                return this.lastName;
-            }
-            set
-            {
-                lastName = value;
-            }
         }
     }
 }

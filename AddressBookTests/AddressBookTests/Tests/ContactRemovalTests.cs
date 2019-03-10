@@ -14,7 +14,6 @@ namespace AddressBookTests
             List<ContactData> oldContacts = app.ContactsHelper.GetContactList();
 
             app.ContactsHelper.Remove(0);
-
             oldContacts.RemoveAt(0);
             List<ContactData> newContacts = app.ContactsHelper.GetContactList();
             oldContacts.Sort();
