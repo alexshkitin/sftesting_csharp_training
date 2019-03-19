@@ -11,6 +11,58 @@ namespace AddressBookTests
 
         private List<ContactData> contactCache = null;
 
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            int actualRowId = index + 2;
+            manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[actualRowId]
+                .FindElements(By.TagName("td"));
+
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+
+            string phones = cells[5].Text;
+
+            string emails = cells[4].Text;
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllPhones = phones,
+                AllEmails = emails
+            };
+        }
+
+        public ContactData GetContactInformationFromEditForm(int index)
+        {
+            int actualRowId = index + 2;
+            manager.Navigator.GoToHomePage();
+            InitModification(actualRowId);
+
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                WorkPhone = workPhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
+            };
+        }
+
         public ContactsHelper Create(ContactData contact)
         {
             manager.Navigator.GoToHomePage();
@@ -24,7 +76,7 @@ namespace AddressBookTests
         {
             manager.Navigator.GoToHomePage();
 
-            int actualRowId = rowId + 2;
+            int actualRowId = rowId;
             Select(actualRowId);
             InitModification(actualRowId);
             FillContactForm(contactData);
@@ -36,7 +88,7 @@ namespace AddressBookTests
         {
             manager.Navigator.GoToHomePage();
 
-            int actualRowId = rowId + 2;
+            int actualRowId = rowId;
             Select(actualRowId);
             DeleteContact();
             manager.Navigator.GoToHomePage();
@@ -53,8 +105,9 @@ namespace AddressBookTests
 
         public ContactsHelper Select(int rowId)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
-                + rowId + "]/td/input")).Click();
+            driver.FindElements(By.Name("entry"))[rowId]
+                   .FindElements(By.TagName("td"))[0]
+                   .FindElement(By.Name("selected[]")).Click();
             return this;
         }
 
@@ -73,8 +126,9 @@ namespace AddressBookTests
 
         public ContactsHelper InitModification(int rowId)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["
-                +rowId+"]/td[8]/a/img")).Click();
+            driver.FindElements(By.Name("entry"))[rowId]
+                .FindElements(By.TagName("td"))[7]
+                .FindElement(By.TagName("a")).Click();
             return this;
         }
 
