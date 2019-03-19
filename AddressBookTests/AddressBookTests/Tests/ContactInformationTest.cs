@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace AddressBookTests
 {
@@ -12,8 +11,8 @@ namespace AddressBookTests
             ContactData contactFromTable = app.ContactsHelper.GetContactInformationFromTable(0);
             ContactData contactFromForm = app.ContactsHelper.GetContactInformationFromEditForm(0);
 
-            Assert.AreEqual(contactFromForm, contactFromForm);
-            Assert.AreEqual(contactFromTable.Address, contactFromForm.Address);
+            Assert.AreEqual(contactFromForm, contactFromTable);
+            Assert.AreEqual(contactFromForm.Address, contactFromTable.Address);
             Assert.AreEqual(contactFromForm.AllPhones, contactFromTable.AllPhones);
 
         }

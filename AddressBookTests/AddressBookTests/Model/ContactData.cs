@@ -105,6 +105,15 @@ namespace AddressBookTests
                 ", last name = " + LastName;
         }
 
+        public string AsSingleString()
+        {
+            string contactDataAsString = (Cleanup(FirstName)+
+                Cleanup(LastName) + allPhones + AllEmails)
+                .Replace("\r","")
+                .Replace("\n", "");
+            return contactDataAsString;
+        }
+
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))

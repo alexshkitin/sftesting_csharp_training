@@ -13,9 +13,8 @@ namespace AddressBookTests
 
         public ContactData GetContactInformationFromTable(int index)
         {
-            int actualRowId = index + 2;
             manager.Navigator.GoToHomePage();
-            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[actualRowId]
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"));
 
             string lastName = cells[1].Text;
@@ -34,11 +33,28 @@ namespace AddressBookTests
             };
         }
 
+        public string GetContactInformationFromDetailes(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenDetailes(index);
+            string contactInfo = driver.FindElement(By.Id("content")).Text;
+            string result = contactInfo.Replace("\n", "").Replace("\r", "").Replace(" ", "").Replace(":", "").Replace("-","")
+                .Replace("W", "").Replace("H", "").Replace("M", "");
+            return result;
+
+        }
+
+        public void OpenDetailes(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                  .FindElements(By.TagName("td"))[6]
+                  .FindElement(By.TagName("a")).Click();
+        }
+
         public ContactData GetContactInformationFromEditForm(int index)
         {
-            int actualRowId = index + 2;
             manager.Navigator.GoToHomePage();
-            InitModification(actualRowId);
+            InitModification(index);
 
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
@@ -76,9 +92,8 @@ namespace AddressBookTests
         {
             manager.Navigator.GoToHomePage();
 
-            int actualRowId = rowId;
-            Select(actualRowId);
-            InitModification(actualRowId);
+            Select(rowId);
+            InitModification(rowId);
             FillContactForm(contactData);
             SubmitModification();
             return this;
@@ -88,8 +103,7 @@ namespace AddressBookTests
         {
             manager.Navigator.GoToHomePage();
 
-            int actualRowId = rowId;
-            Select(actualRowId);
+            Select(rowId);
             DeleteContact();
             manager.Navigator.GoToHomePage();
             return this;
