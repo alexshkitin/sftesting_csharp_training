@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Internal;
 using System;
 using System.Text;
 
@@ -17,7 +18,8 @@ namespace AddressBookTests
         }
 
         public static string GenerateRandomString(int maxLength)
-        {           
+        {
+            Randomizer rnd = Randomizer.CreateRandomizer();
             int l = Convert.ToInt32(rnd.NextDouble() * maxLength);
             StringBuilder builder = new StringBuilder();
             for(int i =0; i<l; i++)
