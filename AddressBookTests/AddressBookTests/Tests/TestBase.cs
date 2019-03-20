@@ -10,7 +10,8 @@ namespace AddressBookTests
 
         protected string baseURL;
         protected ApplicationManager app;
-        public static Random rnd = new Random();
+        public static Randomizer rnd = Randomizer.CreateRandomizer();
+
         [SetUp]
         public void SetupAppManager()
         {
@@ -19,7 +20,7 @@ namespace AddressBookTests
 
         public static string GenerateRandomString(int maxLength)
         {
-            Randomizer rnd = Randomizer.CreateRandomizer();
+
             int l = Convert.ToInt32(rnd.NextDouble() * maxLength);
             StringBuilder builder = new StringBuilder();
             for(int i =0; i<l; i++)
