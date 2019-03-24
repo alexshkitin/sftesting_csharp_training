@@ -9,12 +9,12 @@ namespace AddressBookTests
         public void TestContactInformation()
         {
             ContactData contactFromTable = app.ContactsHelper.GetContactInformationFromTable(0);
-            ContactData contactFromForm = app.ContactsHelper.GetContactInformationFromEditForm(0);
+            ContactData contactFromEditForm = app.ContactsHelper.GetContactInformationFromEditForm(0);
 
-            Assert.AreEqual(contactFromForm, contactFromTable);
-            Assert.AreEqual(contactFromForm.Address, contactFromTable.Address);
-            Assert.AreEqual(contactFromForm.AllPhones, contactFromTable.AllPhones);
-
+            Assert.AreEqual(contactFromTable, contactFromEditForm);
+            Assert.AreEqual(contactFromTable.Address, contactFromEditForm.Address);
+            Assert.AreEqual(contactFromTable.AllPhones, contactFromEditForm.AllPhones);
+            Assert.AreEqual(contactFromTable.AllEmails, contactFromEditForm.AllEmails);
         }
 
     }

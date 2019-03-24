@@ -73,6 +73,7 @@ namespace AddressBookTests
                 Address = address,
                 HomePhone = homePhone,
                 WorkPhone = workPhone,
+                MobilePhone = mobilePhone,
                 Email = email,
                 Email2 = email2,
                 Email3 = email3,

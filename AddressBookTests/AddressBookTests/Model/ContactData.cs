@@ -27,7 +27,7 @@ namespace AddressBookTests
                 }
                 else
                 {
-                    return Cleanup(Email) + Cleanup(Email2) + Cleanup(Email3);
+                    return (Cleanup(Email) + Cleanup(Email2) + Cleanup(Email3)).Trim();
                 }
             }
 
@@ -47,7 +47,7 @@ namespace AddressBookTests
                 }
                 else
                 {
-                    return (Cleanup(WorkPhone) + Cleanup(MobilePhone) + Cleanup(HomePhone)).Trim();
+                    return (Cleanup(HomePhone) + Cleanup(MobilePhone) + Cleanup(WorkPhone)).Trim();
                 }
             }
             set
