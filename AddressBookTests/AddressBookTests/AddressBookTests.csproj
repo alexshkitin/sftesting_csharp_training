@@ -86,6 +86,9 @@
     <Compile Include="Tests\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="contacts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="groups.csv" />
     <None Include="groups.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
