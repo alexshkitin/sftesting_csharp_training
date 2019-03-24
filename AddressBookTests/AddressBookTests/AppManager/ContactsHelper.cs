@@ -38,9 +38,8 @@ namespace AddressBookTests
             manager.Navigator.GoToHomePage();
             OpenDetailes(index);
             string contactInfo = driver.FindElement(By.Id("content")).Text;
-            string result = contactInfo.Replace("\n", "").Replace("\r", "").Replace(" ", "").Replace("-","")
-                .Replace("W:", "").Replace("H:", "").Replace("M:", "");
-            return result;
+            string result = contactInfo.Replace("-","").Replace(" ", "");
+            return contactInfo;
 
         }
 

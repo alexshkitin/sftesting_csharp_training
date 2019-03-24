@@ -9,10 +9,10 @@ namespace AddressBookTests
         [Test]
         public void TestContactDetailes()
         {
-            ContactData contactFromTable = app.ContactsHelper.GetContactInformationFromTable(0);
+            ContactData contactFromEditForm = app.ContactsHelper.GetContactInformationFromEditForm(0);
             string contactFromDetailes = app.ContactsHelper.GetContactInformationFromDetailes(0);
-
-            Assert.AreEqual(contactFromTable.AsSingleString(), contactFromDetailes);
+            string contactFormFormAsString = contactFromEditForm.AsSingleString();
+            Assert.AreEqual(contactFormFormAsString, contactFromDetailes);
         }
 
     }

@@ -107,11 +107,30 @@ namespace AddressBookTests
 
         public string AsSingleString()
         {
-            string contactDataAsString = (Cleanup(FirstName)+
-                Cleanup(LastName) + allPhones + AllEmails)
-                .Replace("\r","")
-                .Replace("\n", "");
+            string lastName = Wrap(LastName, " ", "");
+
+            string workPhone = Wrap(WorkPhone, "W: ", "\r\n");
+            string homePhone = Wrap(HomePhone, "H: ", "\r\n");
+            string mobilePhone = Wrap(MobilePhone, "M: ", "\r\n");
+            string allPhones = Wrap((homePhone + mobilePhone + workPhone).Trim(), "\r\n", "\r\n");
+            
+            string allEmails =  Wrap(AllEmails, "\r\n", "");
+
+            string contactDataAsString = (FirstName +
+                LastName +"\r\n" + allPhones + allEmails).Trim();
             return contactDataAsString;
+        }
+
+        public string Wrap(string phone, string prefix, string postfix)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            else
+            {
+                return prefix+phone+postfix;
+            }
         }
 
         public int CompareTo(ContactData other)
