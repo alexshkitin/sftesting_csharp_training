@@ -17,6 +17,23 @@ namespace AddressBookTests
         public string Email2 { get; set; }
         public string Email3 { get; set; }
 
+        public ContactData()
+        { }
+
+        public ContactData(string firstName)
+        {
+            FirstName = firstName;
+        }
+
+        public ContactData(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+
+
+
         public string AllEmails
         {
             get
@@ -68,17 +85,6 @@ namespace AddressBookTests
             }
         }
 
-
-        public ContactData(string firstName)
-        {
-            FirstName = firstName;
-        }
-
-        public ContactData(string firstName, string lastName)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-        }
 
         public bool Equals(ContactData other)
         {
