@@ -1,21 +1,48 @@
 ﻿using System;
+using LinqToDB.Mapping;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AddressBookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData  : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
         private string allEmails;
 
+        [Column(Name = "Id"), PrimaryKey, Identity]
+        public string Id { get; set; }
+
+        [Column(Name = "firstname")]
         public string FirstName { get; set; }
+
+        [Column(Name = "lastname")]
         public string LastName { get; set; }
+
+        [Column(Name = "address")]
         public string Address { get; set; }
+
+        [Column(Name = "home")]
         public string HomePhone { get; set; }
+
+        [Column(Name = "work")]
         public string MobilePhone { get; set; }
+
+        [Column(Name = "mobile")]
         public string WorkPhone { get; set; }
+
+        [Column(Name = "email")]
         public string Email { get; set; }
+
+        [Column(Name = "email2")]
         public string Email2 { get; set; }
+
+        [Column(Name = "email3")]
         public string Email3 { get; set; }
+
+        [Column(Name = "deprecated")]
+        public DateTime Deprecated { get; set; }
 
         public ContactData()
         { }
@@ -31,8 +58,12 @@ namespace AddressBookTests
             LastName = lastName;
         }
 
-
-
+        public ContactData(string firstName, string lastName, string id)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Id = id;
+        }
 
         public string AllEmails
         {
@@ -147,6 +178,29 @@ namespace AddressBookTests
             }
 
             return (FirstName + LastName).CompareTo(other.FirstName + other.LastName);
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                List<ContactData> all= (from g in db.Contacts select g).ToList();
+                return all.FindAll(FilterContact);
+            }           
+        }
+
+        private static bool FilterContact(ContactData contact)
+        {
+
+            if (contact.Deprecated.CompareTo(DateTime.MinValue) == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

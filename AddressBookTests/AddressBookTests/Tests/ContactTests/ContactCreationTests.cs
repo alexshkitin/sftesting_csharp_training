@@ -7,7 +7,7 @@ using System.IO;
 namespace AddressBookTests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -40,12 +40,12 @@ namespace AddressBookTests
         public void ContactCreationTest(ContactData contact)
         {
 
-            List<ContactData> oldContacts = app.ContactsHelper.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             app.ContactsHelper.Create(contact);
             oldContacts.Add(contact);
 
-            List<ContactData> newContacts = app.ContactsHelper.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
@@ -57,12 +57,12 @@ namespace AddressBookTests
             ContactData contact = new ContactData("");
             contact.LastName = "";
 
-            List<ContactData> oldContacts = app.ContactsHelper.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             app.ContactsHelper.Create(contact);
             oldContacts.Add(contact);
 
-            List<ContactData> newContacts = app.ContactsHelper.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);

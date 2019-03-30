@@ -4,28 +4,23 @@ using System.Collections.Generic;
 namespace AddressBookTests
 {
     [TestFixture]
-    class ContactModificationTests : AuthTestBase
+    class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
             app.ContactsHelper.CreateContactIfNotExisted();
 
-            ContactData newContactData = new ContactData("New Naame");
-            newContactData.LastName = "new laast naame";
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData newContactData = new ContactData("NewNaame", "NewLast", oldContacts[0].Id);
 
-            List<ContactData> oldContacts = app.ContactsHelper.GetContactList();
-            
-            app.ContactsHelper
-                .Modify(0, newContactData);
+            app.ContactsHelper.Modify(newContactData);
 
             oldContacts[0] = newContactData;
-            List<ContactData> newContacts = app.ContactsHelper.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
-
-
         }
     }
 }

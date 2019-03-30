@@ -88,22 +88,22 @@ namespace AddressBookTests
             return this;
         }
 
-        public ContactsHelper Modify(int rowId, ContactData contactData)
+        public ContactsHelper Modify(ContactData contactData)
         {
             manager.Navigator.GoToHomePage();
 
-            Select(rowId);
-            InitModification(rowId);
+            Select(contactData.Id);
+            InitModification(contactData.Id);
             FillContactForm(contactData);
             SubmitModification();
             return this;
         }
 
-        public ContactsHelper Remove(int rowId)
+        public ContactsHelper Remove(ContactData contact)
         {
             manager.Navigator.GoToHomePage();
 
-            Select(rowId);
+            Select(contact.Id);
             DeleteContact();
             manager.Navigator.GoToHomePage();
             return this;
@@ -125,6 +125,13 @@ namespace AddressBookTests
             return this;
         }
 
+        public ContactsHelper Select(string id)
+        {
+            driver.FindElement(
+                By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
+            return this;
+        }
+
         public bool IsAnyContactCreated()
         {
             return IsElementPresent(By.XPath("//table[@id='maintable']" +
@@ -143,6 +150,12 @@ namespace AddressBookTests
             driver.FindElements(By.Name("entry"))[rowId]
                 .FindElements(By.TagName("td"))[7]
                 .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
+        public ContactsHelper InitModification(string id)
+        {
+            driver.FindElement(By.CssSelector(string.Format("[href*='edit.php?id={0}']", id))).Click();
             return this;
         }
 

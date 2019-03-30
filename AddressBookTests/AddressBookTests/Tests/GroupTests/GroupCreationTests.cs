@@ -5,16 +5,18 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Linq;
+using System;
 
 namespace AddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
             List<GroupData> groups = new List<GroupData>();
-            for (int i=0; i<5 ;i++)
+            for (int i = 0; i < 5; i++)
             {
                 groups.Add(new GroupData(GenerateRandomString(30))
                 {
@@ -47,7 +49,7 @@ namespace AddressBookTests
         {
             string workDirectoty = TestContext.CurrentContext.WorkDirectory;
             return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>))
-                .Deserialize(new StreamReader(workDirectoty+@"\groups.xml"));
+                .Deserialize(new StreamReader(workDirectoty + @"\groups.xml"));
         }
 
         public static IEnumerable<GroupData> GroupDataFromJSONFile()
@@ -60,11 +62,11 @@ namespace AddressBookTests
         [Test, TestCaseSource("GroupDataFromJSONFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List<GroupData> oldGroups = app.GroupsHelper.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.GroupsHelper.Create(group);
             oldGroups.Add(group);
-            List<GroupData> newGroups = app.GroupsHelper.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
@@ -86,6 +88,20 @@ namespace AddressBookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void DBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            app.ContactsHelper.GetContactList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine("from browser:"+end.Subtract(start));
+
+            start = DateTime.Now;
+            List<ContactData> fromDb = ContactData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine("from db:" + end.Subtract(start));
         }
     }
 }
