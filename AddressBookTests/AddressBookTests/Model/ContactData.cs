@@ -42,7 +42,7 @@ namespace AddressBookTests
         public string Email3 { get; set; }
 
         [Column(Name = "deprecated")]
-        public DateTime Deprecated { get; set; }
+        public string Deprecated { get; set; }
 
         public ContactData()
         { }
@@ -184,23 +184,11 @@ namespace AddressBookTests
         {
             using (AddressbookDB db = new AddressbookDB())
             {
-                List<ContactData> all= (from g in db.Contacts select g).ToList();
-                return all.FindAll(FilterContact);
+                return (from g in 
+                            db.Contacts.Where(x=>x.Deprecated=="0000-00-00 00:00:00")
+                        select g).ToList();
+
             }           
-        }
-
-        private static bool FilterContact(ContactData contact)
-        {
-
-            if (contact.Deprecated.CompareTo(DateTime.MinValue) == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
         }
     }
 }

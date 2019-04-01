@@ -93,15 +93,10 @@ namespace AddressBookTests
         [Test]
         public void DBConnectivity()
         {
-            DateTime start = DateTime.Now;
-            app.ContactsHelper.GetContactList();
-            DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine("from browser:"+end.Subtract(start));
-
-            start = DateTime.Now;
-            List<ContactData> fromDb = ContactData.GetAll();
-            end = DateTime.Now;
-            System.Console.Out.WriteLine("from db:" + end.Subtract(start));
+           foreach(ContactData contact in ContactData.GetAll())
+            {
+                System.Console.Out.WriteLine(contact);
+            }
         }
     }
 }

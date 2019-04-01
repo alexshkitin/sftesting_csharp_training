@@ -80,6 +80,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\GroupContactRelation.cs" />
+    <Compile Include="Tests\ContactGroupsTests\AddContsctsToGroupTests.cs" />
+    <Compile Include="Tests\ContactGroupsTests\RemoveContactFromGroup.cs" />
     <Compile Include="Tests\ContactTests\ContactTestBase.cs" />
     <Compile Include="Tests\GroupTests\GroupTestBase.cs" />
     <Compile Include="Model\AccountData.cs" />

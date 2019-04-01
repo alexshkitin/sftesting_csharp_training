@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AddressBookTests
 {
@@ -31,6 +32,51 @@ namespace AddressBookTests
                 AllPhones = phones,
                 AllEmails = emails
             };
+        }
+
+        internal void RemoveContactFromGroup(ContactData contactToRemove, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroup(group.Id);
+            Select(contactToRemove.Id);
+            RemoveFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void RemoveFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroup(string Id)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByValue(Id);
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            Select(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count>0);
+        }
+
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
         }
 
         public string GetContactInformationFromDetailes(int index)
