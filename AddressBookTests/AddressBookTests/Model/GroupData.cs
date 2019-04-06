@@ -83,6 +83,7 @@ namespace AddressBookTests
             }
         }
 
+
         public List<ContactData> GetContacts()
         {
             using (AddressbookDB db = new AddressbookDB())

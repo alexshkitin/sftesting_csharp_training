@@ -9,9 +9,31 @@ namespace AddressBookTests
         [Test]
         public void AddingContactToGroupTest()
         {
-            GroupData group = GroupData.GetAll()[0];
+            if (GroupData.GetAll().Count == 0)
+            {
+                GroupData newGroup = new GroupData("Test group");
+                app.GroupsHelper.Create(newGroup);
+            }
+
+            if (ContactData.GetAll().Count == 0)
+            {
+                ContactData newContact = new ContactData("Test fName", "Test lName");
+                app.ContactsHelper.Create(newContact);
+            }
+
+            GroupData group = GroupData.GetAll().First();
+
+            //нам не повезло - все контакты уже есть в выбранной группе
+            //в этом случае создадим новый контакт
+            if (ContactData.GetAll().Except(group.GetContacts()).Count()==0)
+            {
+                ContactData newContact = new ContactData("Test fName", "Test lName");
+                app.ContactsHelper.Create(newContact);
+            }
+
             List<ContactData> oldList = group.GetContacts();
 
+            //получим все контакты, которых нет в выбранной группе. Сейчас они точно есть.
             ContactData contact = ContactData.GetAll().Except(oldList).First();
 
             app.ContactsHelper.AddContactToGroup(contact, group);
